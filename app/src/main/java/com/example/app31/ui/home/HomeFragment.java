@@ -11,13 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app31.App;
 import com.example.app31.R;
 import com.example.app31.interfaces.OnItemClickListener;
 import com.example.app31.models.Note;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements OnItemClickListener {
 
@@ -27,15 +32,19 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     private NoteAdapter adapter;
     private int position;
     private OnItemClickListener onItemClickListener;
+    private  Note note;
 
 
-    public void onCreate(Bundle savedInstanceState) {
+
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        adapter = new NoteAdapter(HomeFragment.this);
 
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
+
     }
 
     @Override
@@ -48,14 +57,17 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 openTaskFragment();
             }
         });
-        initList();
-        setResultListener();
+        recyclerView.setAdapter(adapter);
+                setResultListener();
+        App.getAppDatabase().taskDao().getAllLive().observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                adapter.addApdateList(notes);
+            }
+        });
     }
 
-    private void initList() {
-        adapter = new NoteAdapter(this);
-        recyclerView.setAdapter(adapter);
-    }
+
 
     private void setResultListener() {
         getParentFragmentManager().setFragmentResultListener("rk_task",
@@ -66,32 +78,31 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                         Note note = (Note) result.getSerializable("keyModel");
                         if (note != null) {
                             adapter.addItem(note);
+
                         }
                     }
                 });
     }
 
-    @Override
-    public void onItemClick(String name, int position) {
-        Toast.makeText(requireContext(), position + " : " + name, Toast.LENGTH_SHORT).show();
 
-    }
 
-    public void onLongClick(int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Are sure to remove that?");
-        builder.setMessage("Are you sure??");
-        builder.setPositiveButton("Yes!", (dialog, which) -> {
-            adapter.remove(position);
-        });
-        builder.setNegativeButton("No...", null);
-        builder.show();
-    }
 
     private void openTaskFragment() {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.action_navigation_home_to_taskFragment);
     }
+
+    @Override
+    public void onClick(Note note, int position) {
+        Toast.makeText(requireContext(), position + " : " + note.getName(), Toast.LENGTH_SHORT).show();
+
+    }
+
+   public void onLongClick(Note note,int position){
+       this.note = note;
+       this.position = position;
+
+   };
 }
 
 

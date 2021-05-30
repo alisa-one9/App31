@@ -42,10 +42,13 @@ public class TaskFragment extends Fragment {
 
     private void save() {
         String text = editText.getText().toString();
-        Note note = new Note(text, new Date());
+
+        Note note = new Note(text,  System.currentTimeMillis());
+        App.getAppDatabase().taskDao().insert(note);
         Bundle bundle = new Bundle();
         bundle.putSerializable("keyModel", note);
         getParentFragmentManager().setFragmentResult("rk_task", bundle);
+
         close();
     }
 

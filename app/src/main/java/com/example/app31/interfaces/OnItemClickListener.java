@@ -1,7 +1,9 @@
 package com.example.app31.interfaces;
 
-public interface OnItemClickListener {
-    void onItemClick(String string, int position);
+import com.example.app31.models.Note;
 
-    void  onLongClick(int position);
+public interface OnItemClickListener {
+    void onClick(Note note, int position);
+
+    void  onLongClick(Note note,int position);
 }
