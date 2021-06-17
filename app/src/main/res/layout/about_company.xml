@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="50dp"
+    android:background="@color/teal_200">
+    <EditText
+        android:id="@+id/aboutCompanyText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:hint="write about your company, your commercial offer:"
+        android:background="@color/white"/>
+    <EditText
+        android:id="@+id/telText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:background="@color/white"
+        android:hint="tel number:"/>
+
+</LinearLayout>

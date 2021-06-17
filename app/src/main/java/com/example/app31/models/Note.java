@@ -1,20 +1,41 @@
 package com.example.app31.models;
 
+import android.provider.ContactsContract;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.app31.DateConverter;
+import com.google.common.base.Converter;
 
 import java.io.Serializable;
 import java.util.Date;
+
 @Entity
+@TypeConverters(DateConverter.class)
 public class Note implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
+    private String docId;
     private String name;
-    private long createdAt;
+    private Date createdAt;
 
-    public Note(String name,long createdAt) {
+    public Note(String title) {
+        this.name = title;
+    }
+
+    public Note(String name, Date createdAt) {
         this.name = name;
-        this.createdAt=createdAt;
+        this.createdAt = createdAt;
+    }
+
+    public String getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public long getId() {
@@ -33,11 +54,11 @@ public class Note implements Serializable {
         this.name = name;
     }
 
-    public long getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

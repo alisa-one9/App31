@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.example.app31.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_taskFragment"
             app:destination="@id/taskFragment" />
@@ -22,11 +22,6 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.app31.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/boardFragment"
         android:name="com.example.app31.ui.onBoard.BoardFragment"
         android:label="fragment_board"
@@ -35,10 +30,27 @@
         android:id="@+id/profileFragment"
         android:name="com.example.app31.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profileFragment_to_avatar1Fragment"
+            app:destination="@id/avatar1Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.example.app31.TaskFragment"
         android:label="fragment_task"
         tools:layout="@layout/fragment_task" />
+    <fragment
+        android:id="@+id/phoneFragment"
+        android:name="com.example.app31.auth.PhoneFragment"
+        android:label="fragment_phone"
+        tools:layout="@layout/fragment_phone" />
+
+    <fragment
+        android:id="@+id/avatar1Fragment"
+        android:name="com.example.app31.Avatar1Fragment"
+        android:label="fragment_avatar1"
+        tools:layout="@layout/fragment_avatar1" />
+
 </navigation>

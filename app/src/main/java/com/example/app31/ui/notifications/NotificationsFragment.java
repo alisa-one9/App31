@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,22 +15,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.app31.R;
 
-public class NotificationsFragment extends Fragment {
-
-    private NotificationsViewModel notificationsViewModel;
+class AboutCompanyFragment extends Fragment {
+private EditText editTextAboutCompany;
+private  EditText telNumber;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        View view= inflater.inflate(R.layout.about_company,container,false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        editTextAboutCompany =view.findViewById(R.id.aboutCompanyText);
+        telNumber = view.findViewById(R.id.telText);
     }
 }

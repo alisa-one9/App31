@@ -17,21 +17,25 @@ import com.example.app31.App;
 import com.example.app31.R;
 import com.example.app31.interfaces.OnItemClickListener;
 import com.example.app31.models.Note;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
-    private List<Note>list = new ArrayList<>();
+    private List<Note> list = new ArrayList<>();
     private int position;
     private OnItemClickListener onItemClickListener;
     private Button btn_menu_sort;
 
+    public NoteAdapter() {
 
+    }
 
-
-
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     @NonNull
     @Override
@@ -41,6 +45,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return new ViewHolder(view);
 
     }
+
     public NoteAdapter(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -48,17 +53,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
-          if (position % 2 == 0) {
-            holder.itemView.setBackgroundColor(Color.YELLOW);
+        if (position % 2 == 0) {
+            holder.itemView.setBackgroundColor(Color.GREEN);
         } else {
-            holder.itemView.setBackgroundColor(Color.MAGENTA);
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
         }
         holder.bind(list.get(position));
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return list.size();
     }
 
@@ -67,16 +71,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         list.add(0, note);
         notifyItemChanged(list.indexOf(0));
     }
-    public void  setList(ArrayList<Note>list){
+
+    public void setList(ArrayList<Note> list) {
         this.list.clear();
         this.list.addAll(list);
         notifyDataSetChanged();
-            }
-    public  void sortList(ArrayList<Note>list) {
+    }
+
+    public void sortList(ArrayList<Note> list) {
         this.list.clear();
-        App.getAppDatabase().taskDao().sortAll();
+        this.list.addAll(list);
         notifyDataSetChanged();
     }
+
     public void remove(int position) {
         list.remove(position);
         notifyItemRemoved(position);
@@ -88,27 +95,39 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setList(List<Note> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public Note getItem(int position) {
+        return list.get(position);
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name, createddAt;
+        private Button btn_menu_sort;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.textTitle);
             createddAt = itemView.findViewById(R.id.textT);
+
             itemView.setOnClickListener(v ->
-                    onItemClickListener.onClick(list.get(getAdapterPosition()),getAdapterPosition()));
+                    onItemClickListener.onClick(list.get(getAdapterPosition()), getAdapterPosition()));
 
             itemView.setOnLongClickListener(v1 -> {
                 AlertDialog alertDialog = new AlertDialog.Builder(itemView.getContext()).setMessage("Вы хотите удалить")
                         .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                              App.getAppDatabase().taskDao().delete(list.get(getAdapterPosition()));
-                              remove(getAdapterPosition());
+                                App.getAppDatabase().taskDao().delete(list.get(getAdapterPosition()));
+                                onItemClickListener.onLongClick(list.get(getAdapterPosition()), getAdapterPosition());
+                                remove(getAdapterPosition());
+
                             }
-                        }).setNegativeButton("НЕТ",null).create();
+                        }).setNegativeButton("НЕТ", null).create();
                 alertDialog.show();
                 return true;
             });
@@ -120,8 +139,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
             name.setText(note.getName());
             @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm, dd MM yyyy");
-            String date = dateFormat.format(System.currentTimeMillis());
-            createddAt.setText(date);
+            if (note.getCreatedAt() != null) {
+                String date = dateFormat.format(note.getCreatedAt());
+                createddAt.setText(date);
+            }
         }
 
     }

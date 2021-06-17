@@ -3,6 +3,9 @@ package com.example.app31.ui.home;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app31.App;
+import com.example.app31.Prefs;
 import com.example.app31.R;
 import com.example.app31.interfaces.OnItemClickListener;
 import com.example.app31.models.Note;
@@ -32,15 +36,22 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     private NoteAdapter adapter;
     private int position;
     private OnItemClickListener onItemClickListener;
-    private  Note note;
-
+    private Note note;
 
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new NoteAdapter(HomeFragment.this);
+        setHasOptionsMenu(true);
+        ImputData();
 
     }
+
+    private void ImputData() {
+        List<Note> list = App.getAppDatabase().taskDao().getAll();
+        adapter.setList(list);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -51,14 +62,10 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
-        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openTaskFragment();
-            }
-        });
+        view.findViewById(R.id.fab).setOnClickListener(v -> openTaskFragment());
         recyclerView.setAdapter(adapter);
-                setResultListener();
+
+        setResultListener();
         App.getAppDatabase().taskDao().getAllLive().observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
@@ -66,7 +73,6 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
             }
         });
     }
-
 
 
     private void setResultListener() {
@@ -78,13 +84,10 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                         Note note = (Note) result.getSerializable("keyModel");
                         if (note != null) {
                             adapter.addItem(note);
-
                         }
                     }
                 });
     }
-
-
 
 
     private void openTaskFragment() {
@@ -98,11 +101,28 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
 
     }
 
-   public void onLongClick(Note note,int position){
-       this.note = note;
-       this.position = position;
+    public void onLongClick(Note note, int position) {
+        this.note = note;
+        this.position = position;
 
-   };
+    }
+
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.popup_menu_for_home_fragment, menu);
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.sortForHomeFragment) {
+            adapter.sortList((ArrayList<Note>) App.getAppDatabase().taskDao().sortAll());
+            return true;
+        } else if (item.getItemId() == R.id.clear_data) {
+            Prefs prefs = new Prefs(requireContext());
+            prefs.clear();
+            App.getAppDatabase().taskDao().delete(note);
+            return true;
+        } else return super.onOptionsItemSelected(item);
+    }
 }
 
 

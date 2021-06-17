@@ -3,20 +3,133 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageGallery"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/girl"
-        android:layout_marginStart="146dp"
-        android:layout_marginTop="185dp"
-        android:layout_marginLeft="146dp" />
-    <TextView
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="370dp"
+        android:background="@drawable/fruits_vegetables"
+        >
+         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageGallery"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="146dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/monicabellucci"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="5dp"/>
+
+        <ImageView
+            android:id="@+id/imageBProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginStart="80dp"
+            android:src="@drawable/fotoset888"
+            android:background="@color/purple_500"/>
+
+        <EditText
+            android:id="@+id/nameProfile"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="286dp"
+            android:gravity="center_horizontal"
+            android:hint="put your name:"
+                android:cursorVisible="true"
+            android:textSize="19sp"
+            android:layout_marginLeft="148dp"
+            android:textColor="@color/black"
+            android:background="@color/white"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="326dp"
+            android:text="DataBase-consulter/on-line helper"
+            android:layout_marginLeft="108dp"
+            android:textColor="@color/black"
+            android:background="@color/white"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        style="@style/FrameStyle"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        >
+        <TextView
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="clip_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.5"
+            android:padding="5dp"
+            android:text="Are you try to find overfull
+                    information?"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="I can help you"
+            android:textAllCaps="false"
+            android:textSize="16dp"
+            android:layout_weight="1"
+            android:layout_gravity="clip_horizontal"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="I*ll find anything"
+            android:textAllCaps="false"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:layout_gravity="clip_horizontal"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/FrameStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:paddingLeft="30dp"
+            android:text="About my company: Its very sociable, quickly navigates the sea of ​​information, will carefully discuss all parts of possible cooperation"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/btnTell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I set info about my company"
+            android:textAllCaps="false"
+            style="@style/ButtonLake"
+            android:layout_gravity="center"
+                        />
+
+    </LinearLayout>
+
 
 </LinearLayout>

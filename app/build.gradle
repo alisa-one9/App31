@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -42,7 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-        //расширение возможностей фрагмента
+    //расширение возможностей фрагмента
     implementation 'androidx.fragment:fragment:1.3.4'
     //подключение к room database
     implementation "android.arch.persistence.room:runtime:1.1.1"
@@ -58,5 +59,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation "androidx.multidex:multidex:2.0.1"
-       implementation 'com.google.firebase:firebase-firestore:23.0.0'
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'
+    // Firestore
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-firestore'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
 }

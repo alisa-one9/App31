@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app31.Prefs;
 import com.example.app31.R;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
@@ -63,8 +65,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             textTitle.setText(titles[position]);
             textDesc.setText(titleDesc[position]);
             imageView.setImageResource(images[position]);
+            btnStart.setOnClickListener(v -> {
 
+
+            });
 
         }
     }
+
+
 }

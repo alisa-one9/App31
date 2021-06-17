@@ -42,11 +42,13 @@ public class BoardFragment extends Fragment {
          viewPager2=view.findViewById(R.id.viewPager);
          springDotsIndicator =view.findViewById(R.id.dots);
          btnSkip =view.findViewById(R.id.btnSkip);
+         btnStart = view.findViewById(R.id.btnStart);
 
         BoardAdapter adapter=new BoardAdapter();
         viewPager2.setAdapter(adapter);
         springDotsIndicator.setViewPager2(viewPager2);
         btnSkip.setOnClickListener(v -> close());
+
 
         requireActivity().getOnBackPressedDispatcher()
                 .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {

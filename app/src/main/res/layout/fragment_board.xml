@@ -29,6 +29,7 @@
         android:layout_weight="6"
         android:layout_marginBottom="15dp"/>
 
+
     <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
         android:id="@+id/dots"
         android:layout_width="wrap_content"
